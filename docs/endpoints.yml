@@ -1,0 +1,274 @@
+openapi: '3.0.3'
+info:
+  title: Shopify - Abandoned Cart Feature
+  version: '1.0'
+servers:
+  - url: API URL
+tags: 
+- name: Authorization
+  description: Regitering new users and logging in
+- name: Profile
+  description: Personal information such as the users real name
+- name: Product
+  description: Product related resources
+- name: Collection
+  description: Collection related resources
+- name: Customer
+  description: Customer related resources
+- name: Order
+  description: Order related resources
+- name: Fulfillment
+  description: Fulfillment related resources
+- name: Abandoned Cart
+  description: Abandoned Cart related resources
+
+paths:
+  /auth/login:
+    post:
+      tags: [Authorization]
+      summary: Login to receive a JWT token
+      parameters:
+        - name: email
+          in: header
+          description: The email used to sign up
+          schema:
+            type: string
+          required: True
+        - name: password
+          in: header
+          description: password matching registered email
+          schema:
+            type: string
+          required: True
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Incorrect username or password
+
+  /auth/register:
+    post:
+      tags: [Authorization]
+      summary: registering a new user
+      parameters:
+        - name: email
+          in: header
+          description: email to register
+          schema:
+            type: string
+          required: True
+        - name: password
+          in: header
+          description: setting a password for email given
+          schema:
+            type: string
+          required: True
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Email already in use
+
+  /product/:
+    get:
+      tags: [Product]
+      summary: Index of all products
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Product]
+      summary: Create a new product
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Product]
+      summary: Update a product
+      parameters:
+        - name: id
+          in: header
+          description: id of the product to be updated
+          schema:
+            type: integer
+          required: True
+        - name: title
+          in: header
+          description: title of the product to be updated
+          schema:
+            type: string
+          required: True
+        - name: price
+          in: header
+          description: price of the product to be updated
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Product]
+      summary: Delete a product
+      parameters:
+        - name: id
+          in: header
+          description: id of the product to be deleted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+
+  /collection/:
+    get:
+      tags: [Collection]
+      summary: Index of all collections
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Collection]
+      summary: Create a new collection
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Collection]
+      summary: Update a collection
+      parameters:
+        - name: id
+          in: header
+          description: id of the collection to be updated
+          schema:
+            type: integer
+          required: True
+        - name: title
+          in: header
+          description: title of the collection to be updated
+          schema:
+            type: string
+          required: True
+        - name: products
+          in: header
+          description: update array of products assigned to collection
+          schema:
+            type: array
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Collection]
+      summary: Delete a collection
+      parameters:
+        - name: id
+          in: header
+          description: id of the collection to be deleted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+
+  /customer/:
+    get:
+      tags: [Customer]
+      summary: Index of all customers
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Customer]
+      summary: Create a new customer
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Customer]
+      summary: Update a customer
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Customer]
+      summary: Delete a customer
+      responses:
+        '200':
+          description: OK
+
+  /order/:
+    get:
+      tags: [Order]
+      summary: Index of all orders
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Order]
+      summary: Create a new order
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Order]
+      summary: Update a order
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Order]
+      summary: Delete a order
+      responses:
+        '200':
+          description: OK
+
+  /fulfillment/:
+    get:
+      tags: [Fulfillment]
+      summary: Index of all fulfillments
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Fulfillment]
+      summary: Create a new fulfillment
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Fulfillment]
+      summary: Update a fulfillment
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Fulfillment]
+      summary: Delete a fulfillment
+      responses:
+        '200':
+          description: OK
+
+  /abandonedcart/:
+    get:
+      tags: [Abandoned Cart]
+      summary: Index of all Abandoned Carts
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Abandoned Cart]
+      summary: Create a new abandoned cart
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Abandoned Cart]
+      summary: Update a abandoned cart
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Abandoned Cart]
+      summary: Delete a abandoned cart
+      responses:
+        '200':
+          description: OK
