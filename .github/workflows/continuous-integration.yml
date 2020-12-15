@@ -24,10 +24,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Run Tests
-        # The below run:
-        # changes directory to src
-        # runs the tests
-        run: |
-          cd src
-          python -m unittest discover tests/
+      # - name: Run Tests
+      #   # The below run:
+      #   # changes directory to src
+      #   # runs the tests
+      #   run: |
+      #     cd src
+      #     python -m unittest discover tests/

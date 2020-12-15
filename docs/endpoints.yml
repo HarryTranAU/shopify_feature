@@ -7,8 +7,6 @@ servers:
 tags: 
 - name: Authorization
   description: Regitering new users and logging in
-- name: Profile
-  description: Personal information such as the users real name
 - name: Product
   description: Product related resources
 - name: Collection
