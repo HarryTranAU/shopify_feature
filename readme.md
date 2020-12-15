@@ -69,6 +69,12 @@ export FLASK_APP=src/main.py
 export FLASK_ENV=development
 flask run
 ```
+# OpenAPI
+
+Endpoints documented using OpenAPI 3.0.3.
+
+[Interactive UI](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/HarryTranAU/shopify_feature/master/docs/endpoints.yml)
+
 
 ## Security
 
