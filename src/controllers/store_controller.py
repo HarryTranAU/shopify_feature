@@ -38,3 +38,8 @@ def store_create(user):
 
     return jsonify(store_schema.dump(new_store))
 
+@store.route("/<int:id>", methods=["PUT", "PATCH"])
+@jwt_required
+@verify_user
+def store_update(user, id):
+    pass
