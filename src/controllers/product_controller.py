@@ -1,6 +1,6 @@
-from models.Store import Store
+from models.Product import Product
 from main import db
-from schemas.StoreSchema import store_schema, stores_schema
+from schemas.ProductSchema import product_schema, products_schema
 from flask import Blueprint, request, jsonify, abort
 from services.auth_service import verify_user
 from flask_jwt_extended import jwt_required
