@@ -14,7 +14,7 @@ def drop_db():
 @db_commands.cli.command("seed")                                # this fronction will run when "flask db-custom seed" is run"
 def seed_db():
     from models.User import User                          # Importing the User model
-    from models.Profile import Profile                          # Importing the Profile model
+    from models.Store import Store                          # Importing the Profile model
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
@@ -32,14 +32,14 @@ def seed_db():
     db.session.commit()                                                         # Commit the seeion to the db 
 
     for i in range(5):
-        profile = Profile()                                                     # Create a profile object from the Profile model                 
+        store = Store()                                                     # Create a profile object from the Profile model                 
 
-        profile.username = faker.first_name()                                   # Add a username to the profile object
-        profile.firstname = faker.first_name()                                  # Add a firstname to the profile object
-        profile.lastname = faker.last_name()                                    # Add a lastname to the profile object
-        profile.user_id = users[i].id                                           # Add a user_id to the profile object. This comes from real ids from the users list
+        store.storename = faker.bs()                                   # Add a username to the profile object
+        store.firstname = faker.first_name()                                  # Add a firstname to the profile object
+        store.lastname = faker.last_name()                                    # Add a lastname to the profile object
+        store.user_id = users[i].id                                           # Add a user_id to the profile object. This comes from real ids from the users list
 
-        db.session.add(profile)                                                 # Add the profile to the session
+        db.session.add(store)                                                 # Add the profile to the session
 
     db.session.commit()                                                         # Commit the session to the database
     print("Tables seeded")                                                      # Print a message to let the user know they 

@@ -2,9 +2,9 @@
 
 
 from controllers.user_controller import user                 # Importing the user blueprint
-from controllers.profile_controller import profiles          # Importing the profile blueprint
+from controllers.store_controller import store          
 
 registerable_controllers = [
     user,
-    profiles
+    store
 ]
