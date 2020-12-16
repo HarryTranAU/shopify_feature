@@ -42,7 +42,15 @@ def store_create(user):
 @jwt_required
 @verify_user
 def store_update(user, id):
-    pass
+    store_fields = store_schema.load(request.json)
+    store = Store.query.filter_by(id=id, user_id=user.id)
+
+    if not store:
+        return abort(400, description="Unauthorized to update this profile")
+
+    print(store.__dict__)
+    store.update(store_fields)
+    return jsonify(store_schema.dump(store[0]))
 
 @store.route("/<int:id>", methods=["DELETE"])
 @jwt_required
