@@ -179,6 +179,8 @@ paths:
           description: update array of products assigned to collection
           schema:
             type: array
+            items:
+              type: string
       responses:
         '200':
           description: OK
