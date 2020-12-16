@@ -43,3 +43,16 @@ def store_create(user):
 @verify_user
 def store_update(user, id):
     pass
+
+@store.route("/<int:id>", methods=["DELETE"])
+@jwt_required
+@verify_user
+def store_delete(user, id):
+    store = Store.query.filter_by(id=id, user_id=user.id).first()
+
+    if not store:
+        return abort(400, description="Unauthorized to update this profile")
+
+    db.session.delete(store)
+    db.session.commit()
+    return jsonify(store_schema.dump(store))
