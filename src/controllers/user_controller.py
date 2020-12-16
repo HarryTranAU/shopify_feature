@@ -1,41 +1,45 @@
-from models.User import User                                                                        # Importing the User Model
-from schemas.UserSchema import user_schema                                                          # Importing the User Schema
-from main import db                                                                                 # This is the db instance created by SQLAlchemy
-from main import bcrypt                                                                             # Import the hasing package from main
-from flask_jwt_extended import create_access_token                                                  # Package for providing JWTs
-from datetime import timedelta                                                                      # Function to calculate the difference in time
-from flask import Blueprint, request, jsonify, abort                                                # Import flask and various sub packages
+from models.User import User
+from schemas.UserSchema import user_schema
+from main import db
+from main import bcrypt
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
+from flask import Blueprint, request, jsonify, abort
 
-user = Blueprint('user', __name__, url_prefix="/user")                                              # Creating the user blueprint, registered in __init__.py
+user = Blueprint('user', __name__, url_prefix="/user")
 
-@user.route("/register", methods=["POST"])                                                          # Register route
+
+@user.route("/register", methods=["POST"])
 def user_register():
-    user_fields = user_schema.load(request.json)                                                    # Getting the fields from the User Schema
-    user = User.query.filter_by(email=user_fields["email"]).first()                                 # Query the user table with the email and return the first user
-    
-    if user:                                                                                        # If a user is returned 
-        return abort(400, description="Email already in use")                                       # Return the error "Email already in use"
+    user_fields = user_schema.load(request.json)
+    user = User.query.filter_by(email=user_fields["email"]).first()
 
-    user = User()                                                                                   # Re-init user as a new instance of the User model
+    if user:
+        return abort(400, description="Email already in use")
 
-    user.email = user_fields["email"]                                                               # Add email to the user
-    user.password = bcrypt.generate_password_hash(user_fields["password"]).decode("utf-8")          # Hash the password and add it to the user
+    user = User()
 
-    db.session.add(user)                                                                            # Add the user to the db session
-    db.session.commit()                                                                             # Commit the session
+    user.email = user_fields["email"]
+    user.password = bcrypt.generate_password_hash(
+                    user_fields["password"]).decode("utf-8")
 
-    return jsonify(user_schema.dump(user))                                                          # Return the user that was just created
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify(user_schema.dump(user))
 
 
-@user.route("/login", methods=["POST"])                                                             # Login route
+@user.route("/login", methods=["POST"])
 def user_login():
-    user_fields = user_schema.load(request.json)                                                    # Getting the fields from the User Schema
-    user = User.query.filter_by(email=user_fields["email"]).first()                                 # Query the user table with the email and return the first user
+    user_fields = user_schema.load(request.json)
+    user = User.query.filter_by(email=user_fields["email"]).first()
 
-    if not user or not bcrypt.check_password_hash(user.password, user_fields["password"]):          # If there is no user or the password is wrong
-        return abort(401, description="Incorrect username or password")                             # Return the error "Incorrect username or password"
+    if not user or not bcrypt.check_password_hash(
+                       user.password, user_fields["password"]):
+        return abort(401, description="Incorrect username or password")
 
-    expiry = timedelta(days=1)                                                                      # Time for the token to expire
-    access_token = create_access_token(identity=str(user.id), expires_delta=expiry)                 # The access token, with the user id and the expiration date
+    expiry = timedelta(days=1)
+    access_token = create_access_token(
+                   identity=str(user.id), expires_delta=expiry)
 
-    return jsonify({ "token": access_token })                                                       # Return the token
+    return jsonify({"token": access_token})

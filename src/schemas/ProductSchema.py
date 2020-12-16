@@ -1,18 +1,17 @@
 from main import ma
-from models.Store import Store
+from models.Product import Product
 from marshmallow.validate import Length
-from schemas.UserSchema import UserSchema
+from schemas.StoreSchema import StoreSchema
 
 
-class StoreSchema(ma.SQLAlchemyAutoSchema):
+class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Store
+        model = Product
 
-    storename = ma.String(required=True, validate=Length(min=1))
-    firstname = ma.String(required=True, validate=Length(min=1))
-    lastname = ma.String(required=True, validate=Length(min=1))
-    user = ma.Nested(UserSchema)
+    title = ma.String(required=True, validate=Length(min=1))
+    price = ma.Number(required=True, validate=Length(min=1))
+    store = ma.Nested(StoreSchema, only=["storename"])
 
 
-store_schema = StoreSchema()
-stores_schema = StoreSchema(many=True)
+product_schema = ProductSchema()
+products_schema = ProductSchema(many=True)

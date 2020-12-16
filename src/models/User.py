@@ -1,4 +1,5 @@
 from main import db
+from models.Store import Store
 from sqlalchemy.orm import backref
 
 

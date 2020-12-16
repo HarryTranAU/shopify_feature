@@ -48,7 +48,7 @@ def store_update(user, id):
     store = Store.query.filter_by(id=id, user_id=user.id)
 
     if not store:
-        return abort(400, description="Unauthorized to update this profile")
+        return abort(400, description="Unauthorized to update this store")
 
     print(store.__dict__)
     store.update(store_fields)
@@ -62,7 +62,7 @@ def store_delete(user, id):
     store = Store.query.filter_by(id=id, user_id=user.id).first()
 
     if not store:
-        return abort(400, description="Unauthorized to update this profile")
+        return abort(400, description="Unauthorized to delete this store")
 
     db.session.delete(store)
     db.session.commit()

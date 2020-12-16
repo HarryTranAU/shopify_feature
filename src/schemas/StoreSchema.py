@@ -8,9 +8,9 @@ class StoreSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Store
 
-    storename = ma.String(required=True, validate=Length(min=1))
-    firstname = ma.String(required=True, validate=Length(min=1))
-    lastname = ma.String(required=True, validate=Length(min=1))
+    storename = ma.String(validate=Length(min=1))
+    firstname = ma.String(validate=Length(min=1))
+    lastname = ma.String(validate=Length(min=1))
     user = ma.Nested(UserSchema)
 
 
