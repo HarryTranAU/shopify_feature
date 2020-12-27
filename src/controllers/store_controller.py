@@ -1,4 +1,5 @@
 from models.Store import Store
+from models.Product import Product
 from main import db
 from schemas.StoreSchema import store_schema, stores_schema
 from flask import Blueprint, request, jsonify, abort
@@ -64,6 +65,9 @@ def store_delete(user, id):
     if not store:
         return abort(400, description="Unauthorized to delete this store")
 
+    products = Product.__table__.delete().where(Product.store_id == id)
+
+    db.session.execute(products)
     db.session.delete(store)
     db.session.commit()
     return jsonify(store_schema.dump(store))
