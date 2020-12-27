@@ -89,3 +89,55 @@ class TestProducts(unittest.TestCase):
         product = Product.query.get(data['id'])
         self.assertEqual(product.title, "testproduct")
         self.assertEqual(product.price, 240)
+
+    def test_product_update(self):
+        response = self.client.post("/user/register",
+                                    json={
+                                        "email": "test97@test.com",
+                                        "password": "123456"
+                                    })
+
+        response = self.client.post("/user/login",
+                                    json={
+                                        "email": "test97@test.com",
+                                        "password": "123456"
+                                    })
+        data = response.get_json()
+        headers_data = {
+            'Authorization': f"Bearer {data['token']}"
+        }
+        data = {
+            "storename": "Myteststore",
+            "firstname": "testfirst",
+            "lastname": "testlast"
+        }
+        response = self.client.post("/store/",
+                                    json=data,
+                                    headers=headers_data)
+        self.assertEqual(response.status_code, 200)
+        store = response.get_json()
+        test_product = {
+            "title": "testproduct",
+            "price": 240
+        }
+        response = self.client.post(f"/{store['id']}/product/",
+                                    json=test_product,
+                                    headers=headers_data)
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        product = Product.query.get(data['id'])
+        self.assertEqual(product.title, "testproduct")
+        self.assertEqual(product.price, 240)
+
+        updated_product = {
+            "title": "updatedproduct",
+            "price": 1234
+        }
+        response = self.client.put(f"/{store['id']}/product/{data['id']}",
+                                   json=updated_product,
+                                   headers=headers_data)
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        product = Product.query.get(data['id'])
+        self.assertEqual(product.title, "updatedproduct")
+        self.assertEqual(product.price, 1234)
