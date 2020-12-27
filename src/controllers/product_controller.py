@@ -71,4 +71,4 @@ def product_delete(user, storeId, id):
 
     db.session.delete(product)
     db.session.commit()
-    return abort(Response("product deleted successfully"))
+    return abort(Response("Product deleted successfully"))

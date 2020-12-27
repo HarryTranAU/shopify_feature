@@ -2,7 +2,7 @@ from models.Store import Store
 from models.Product import Product
 from main import db
 from schemas.StoreSchema import store_schema, stores_schema
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort, Response
 from services.auth_service import verify_user
 from flask_jwt_extended import jwt_required
 from sqlalchemy.orm import joinedload
@@ -69,4 +69,4 @@ def store_delete(user, id):
     db.session.execute(products)
     db.session.delete(store)
     db.session.commit()
-    return jsonify(store_schema.dump(store))
+    return abort(Response("Store deleted successfully"))
