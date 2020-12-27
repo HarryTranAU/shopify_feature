@@ -50,3 +50,42 @@ class TestProducts(unittest.TestCase):
         data = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(data, list)
+
+    def test_product_create(self):
+        response = self.client.post("/user/register",
+                                    json={
+                                        "email": "test98@test.com",
+                                        "password": "123456"
+                                    })
+
+        response = self.client.post("/user/login",
+                                    json={
+                                        "email": "test98@test.com",
+                                        "password": "123456"
+                                    })
+        data = response.get_json()
+        headers_data = {
+            'Authorization': f"Bearer {data['token']}"
+        }
+        data = {
+            "storename": "Myteststore",
+            "firstname": "testfirst",
+            "lastname": "testlast"
+        }
+        response = self.client.post("/store/",
+                                    json=data,
+                                    headers=headers_data)
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        test_product = {
+            "title": "testproduct",
+            "price": 240
+        }
+        response = self.client.post(f"/{data['id']}/product/",
+                                    json=test_product,
+                                    headers=headers_data)
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        product = Product.query.get(data['id'])
+        self.assertEqual(product.title, "testproduct")
+        self.assertEqual(product.price, 240)
