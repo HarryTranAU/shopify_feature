@@ -9,6 +9,7 @@ class Product(db.Model):
     price = db.Column(db.Numeric(), nullable=False)
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"),
                          nullable=False)
+    
 
     def __repr__(self):
         return f"<Product {self.title}, {self.price}>"

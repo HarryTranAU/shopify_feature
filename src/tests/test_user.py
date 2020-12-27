@@ -1,49 +1,48 @@
-import unittest                                                         # This is the inbuilt python testing module
-from main import create_app, db                                         # This is the create_app function from the factory pattern and the DB from main
-from models.User import User                                      # The User module to be used to log in to retrieve a JWT
+import unittest
+from main import create_app, db
+from models.User import User
 
-class TestProfiles(unittest.TestCase):                                  # This is the Parent class that will test our Profile functionality.    
+
+class TestUsers(unittest.TestCase):
     @classmethod
-    def setUp(cls):                                                     # This method will run before each and every class
-        cls.app = create_app()                                          # Create a new instance of app
-        cls.app_context = cls.app.app_context()                         # Creating context for which the app is in. The tests run in parrallel therefore we need to keep track of which instance of app we are using
-        cls.app_context.push()                                          # Pushing context. Read the docs for more
-        cls.client = cls.app.test_client()                              # Adding the test client to the client
-        db.create_all()                                                 # Create all the 
+    def setUp(cls):
+        cls.app = create_app()
+        cls.app_context = cls.app.app_context()
+        cls.app_context.push()
+        cls.client = cls.app.test_client()
+        db.create_all()
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db-custom", "seed"])                       # This seeds the db
+        runner.invoke(args=["db-custom", "seed"])
 
-    @classmethod                                                        # This method will run after each and every class
-    def tearDown(cls):                                                  # We want to delete all the data from the class tests
-        db.session.remove()                                             # Remove the session from the db
-        db.drop_all()                                                   # Drop all tables
-        cls.app_context.pop()                                           # Remove the context of the app
-
+    @classmethod
+    def tearDown(cls):
+        db.session.remove()
+        db.drop_all()
+        cls.app_context.pop()
 
     def test_user_register(self):
-        response = self.client.post("/user/register",                   # Sending a post request to /user/register
-        json = {                                                        # Data needed to register a new user
+        response = self.client.post("/user/register",
+        json = {
             "email": "test6@test.com",
             "password": "123456"
         })
-        self.assertEqual(response.status_code, 200)                     # Make sure the status codefrom the response is 200
-        data = response.get_json()                                      # Convert the data to JSON
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
 
-        response = self.client.post("/user/login",                      # Sending a post request to /user/login
-        json = {                                                        # The json data needed to login ( From the new user )
+        response = self.client.post("/user/login",
+        json = {
             "email": "test6@test.com",
             "password": "123456"
         })                    
-        data = response.get_json()                                      # jsonify the data
-        self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
-
+        data = response.get_json()
+        self.assertEqual(response.status_code, 200)
 
     def test_user_login(self):
-        response = self.client.post("/user/login",                       # Sending a post request to /user/login
-        json = {                                                         # The json data needed to login
+        response = self.client.post("/user/login",
+        json = {
             "email": "test1@test.com",
             "password": "123456"
         })
-        data = response.get_json()                                        # Convert the response to data
-        self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
-        self.assertIsInstance(data['token'], str)                         # Checking the data data type of the token
+        data = response.get_json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data['token'], str)

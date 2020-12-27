@@ -10,7 +10,7 @@ class Store(db.Model):
     firstname = db.Column(db.String(), nullable=False)
     lastname = db.Column(db.String(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    product = db.relationship("Product", backref="user")
+    product = db.relationship("Product", backref="store")
 
     def __repr__(self):
         return f"<Store {self.storename}>"

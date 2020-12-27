@@ -1,4 +1,4 @@
-# Shopify - Advance Abandon Cart Feature
+# Shopify - Advance Abandoned Cart Feature
 
 ##### Harry Tran (T3A3)
 
