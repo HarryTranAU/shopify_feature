@@ -51,7 +51,6 @@ def store_update(user, id):
     if not store:
         return abort(400, description="Unauthorized to update this store")
 
-    print(store.__dict__)
     store.update(store_fields)
     return jsonify(store_schema.dump(store[0]))
 
