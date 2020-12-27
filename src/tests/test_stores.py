@@ -1,7 +1,6 @@
 import unittest
 from main import create_app, db
 from models.Store import Store
-from models.User import User
 
 
 class TestStores(unittest.TestCase):
@@ -90,7 +89,7 @@ class TestStores(unittest.TestCase):
         }
         response = self.client.put(f"/store/{store_data['id']}",
                                    json=put_data,
-                                   headers=headers_data)                         
+                                   headers=headers_data)
         data = response.get_json()
         store = Store.query.get(data["id"])
         self.assertEqual(store.storename, "Myupdatedteststore")

@@ -5,7 +5,6 @@ from schemas.ProductSchema import product_schema, products_schema
 from flask import Blueprint, request, jsonify, abort
 from services.auth_service import verify_user
 from flask_jwt_extended import jwt_required
-from sqlalchemy.orm import joinedload
 
 product = Blueprint("products", __name__, url_prefix="/<int:storeId>/product")
 
