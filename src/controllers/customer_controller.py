@@ -61,18 +61,18 @@ def customer_update(user, storeId, id):
     return jsonify(customer_schema.dump(customer[0]))
 
 
-# @customer.route("/<int:id>", methods=["DELETE"])
-# @jwt_required
-# @verify_user
-# def customer_delete(user, storeId, id):
-#     customer = Customer.query.filter_by(id=id, store_id=storeId).first()
-#     if not customer:
-#         return abort(400, description="Unauthorized to delete this customer")
+@customer.route("/<int:id>", methods=["DELETE"])
+@jwt_required
+@verify_user
+def customer_delete(user, storeId, id):
+    customer = Customer.query.filter_by(id=id, store_id=storeId).first()
+    if not customer:
+        return abort(400, description="Unauthorized to delete this customer")
 
-#     store = Store.query.filter_by(id=storeId, user_id=user.id).first()
-#     if not store:
-#         return abort(400, description="Incorrect storeID in URL")
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
 
-#     db.session.delete(customer)
-#     db.session.commit()
-#     return abort(Response("Customer deleted successfully"))
+    db.session.delete(customer)
+    db.session.commit()
+    return abort(Response("Customer deleted successfully"))
