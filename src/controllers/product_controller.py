@@ -27,7 +27,7 @@ def product_create(user, storeId):
     new_product = Product()
     new_product.title = product_fields["title"]
     new_product.price = product_fields["price"]
-    new_product.user_id = user.id
+    new_product.store_id = storeId
 
     store = Store.query.filter_by(id=storeId, user_id=user.id).first()
     if not store:
