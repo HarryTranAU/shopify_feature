@@ -43,22 +43,22 @@ def customer_create(user, storeId):
     return jsonify(customer_schema.dump(new_customer))
 
 
-# @customer.route("/<int:id>", methods=["PUT", "PATCH"])
-# @jwt_required
-# @verify_user
-# def customer_update(user, storeId, id):
-#     customer_fields = customer_schema.load(request.json)
-#     customer = Customer.query.filter_by(id=id, store_id=storeId)
-#     if not customer:
-#         return abort(400, description="Unauthorized to update this customer")
+@customer.route("/<int:id>", methods=["PUT", "PATCH"])
+@jwt_required
+@verify_user
+def customer_update(user, storeId, id):
+    customer_fields = customer_schema.load(request.json)
+    customer = Customer.query.filter_by(id=id, store_id=storeId)
+    if not customer:
+        return abort(400, description="Unauthorized to update this customer")
 
-#     store = Store.query.filter_by(id=storeId, user_id=user.id).first()
-#     if not store:
-#         return abort(400, description="Incorrect storeID in URL")
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
 
-#     customer.update(customer_fields)
-#     db.session.commit()
-#     return jsonify(customer_schema.dump(customer[0]))
+    customer.update(customer_fields)
+    db.session.commit()
+    return jsonify(customer_schema.dump(customer[0]))
 
 
 # @customer.route("/<int:id>", methods=["DELETE"])
