@@ -5,14 +5,13 @@ from schemas.StoreSchema import store_schema, stores_schema
 from flask import Blueprint, request, jsonify, abort, Response
 from services.auth_service import verify_user
 from flask_jwt_extended import jwt_required
-from sqlalchemy.orm import joinedload
 
 store = Blueprint("stores", __name__, url_prefix="/store")
 
 
 @store.route("/", methods=["GET"])
 def store_index():
-    stores = Store.query.options(joinedload("user")).all()
+    stores = Store.query.all()
     return jsonify(stores_schema.dump(stores))
 
 

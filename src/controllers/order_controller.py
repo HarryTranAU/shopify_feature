@@ -10,12 +10,15 @@ order = Blueprint("orders",
                   __name__,
                   url_prefix="/<int:storeId>/order")
 
+from models.Customer import Customer
+
+from schemas.StoreSchema import stores_schema
 
 @order.route("/", methods=["GET"])
 def order_index(storeId):
-    # orders = Order.query.filter_by(store_id=storeId).all()
-    # return jsonify(orders_schema.dump(orders))
-    pass
+    orders = Order.query.join(Customer).join(Store).filter(Customer.store_id == storeId).all()
+    print(orders)
+    return jsonify(orders_schema.dump(orders))
 
 
 @order.route("/", methods=["POST"])
