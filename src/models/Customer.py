@@ -1,4 +1,5 @@
 from main import db
+from models.Order import Order
 
 
 class Customer(db.Model):
@@ -11,6 +12,7 @@ class Customer(db.Model):
     phone = db.Column(db.String())
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"),
                          nullable=False)
+    order = db.relationship("Order", backref="customers")
 
     def __repr__(self):
         return f"<Customer {self.firstname}, {self.lastname}, {self.email}>"
