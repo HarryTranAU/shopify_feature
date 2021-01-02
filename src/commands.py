@@ -78,7 +78,7 @@ def seed_db():
                 db.session.commit()
 
                 for m in range(3):
-                    order.orders_products.append(choice(products).id)
+                    order.orders_products.append(choice(products))
 
                     db.session.commit()
 
