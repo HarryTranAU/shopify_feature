@@ -44,25 +44,6 @@ def order_create(storeId, customerID):
     return jsonify(order_schema.dump(new_order))
 
 
-@order.route("/<int:id>", methods=["PUT", "PATCH"])
-@jwt_required
-@verify_user
-def order_update(user, storeId, id):
-    # order_fields = order_schema.load(request.json)
-    # order = Order.query.filter_by(id=id, store_id=storeId)
-    # if not order:
-    #     return abort(400, description="Unauthorized to update this order")
-
-    # store = Store.query.filter_by(id=storeId, user_id=user.id).first()
-    # if not store:
-    #     return abort(400, description="Incorrect storeID in URL")
-
-    # order.update(order_fields)
-    # db.session.commit()
-    # return jsonify(order_schema.dump(order[0]))
-    pass
-
-
 @order.route("/delete/<int:orderID>", methods=["DELETE"])
 @jwt_required
 @verify_user
@@ -78,3 +59,22 @@ def order_delete(user, storeId, orderID):
     db.session.delete(order)
     db.session.commit()
     return abort(Response("Order deleted successfully"))
+
+
+@order.route("/checkout/<int:orderID>", methods=["PUT", "PATCH"])
+@jwt_required
+@verify_user
+def order_checkout(user, storeId, orderID):
+    order_fields = order_schema.load(request.json)
+
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
+
+    order = Order.query.filter_by(id=orderID)
+    if not order:
+        return abort(400, description="orderID does not exist")
+
+    order.update(order_fields)
+    db.session.commit()
+    return jsonify(order_schema.dump(order[0]))
