@@ -8,7 +8,8 @@ class OrderSchema(ma.SQLAlchemyAutoSchema):
         model = Order
 
     order_placed = ma.Boolean()
-    customer = ma.Nested(CustomerSchema(only=("email",)))
+    cart = ma.List(ma.Integer())
+    customer = ma.Nested(CustomerSchema(only=("firstname",)))
 
 
 order_schema = OrderSchema()

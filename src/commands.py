@@ -71,7 +71,7 @@ def seed_db():
 
             for k in range(5):
                 order = Order()
-                order.order_placed = True
+                order.order_placed = choice([True, False])
                 order.customer_id = choice(customers).id
                 db.session.add(order)
 

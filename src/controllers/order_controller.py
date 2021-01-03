@@ -1,5 +1,7 @@
 from models.Order import Order
 from models.Store import Store
+from models.Customer import Customer
+from models.Product import Product
 from main import db
 from schemas.OrderSchema import order_schema, orders_schema
 from flask import Blueprint, request, jsonify, abort, Response
@@ -10,42 +12,36 @@ order = Blueprint("orders",
                   __name__,
                   url_prefix="/<int:storeId>/order")
 
-from models.Customer import Customer
-
-from schemas.StoreSchema import stores_schema
 
 @order.route("/", methods=["GET"])
 def order_index(storeId):
-    orders = Order.query.join(Customer).join(Store).filter(Customer.store_id == storeId).all()
-    print(orders)
+    orders = Order.query.join(Customer)\
+                        .join(Store)\
+                        .filter(Customer.store_id == storeId).all()
     return jsonify(orders_schema.dump(orders))
 
 
-@order.route("/", methods=["POST"])
-@jwt_required
-@verify_user
-def order_create(user, storeId):
-    # order_fields = order_schema.load(request.json)
-    # order = Order.query.filter_by(email=order_fields["email"]).first()
-    # if order:
-    #     return abort(400, description="Email already in use")
+@order.route("/<int:customerID>", methods=["POST"])
+def order_create(storeId, customerID):
+    order_fields = order_schema.load(request.json)
 
-    # new_order = Order()
-    # new_order.firstname = order_fields["firstname"]
-    # new_order.lastname = order_fields["lastname"]
-    # new_order.email = order_fields["email"]
-    # new_order.phone = order_fields["phone"]
-    # new_order.store_id = storeId
+    new_order = Order()
+    new_order.order_placed = order_fields["order_placed"]
+    cart = order_fields["cart"]
+    for item in cart:
+        item_query = Product.query.filter_by(id=item).first()
+        new_order.orders_products.append(item_query)
+        db.session.commit()
+    new_order.customer_id = customerID
 
-    # store = Store.query.filter_by(id=storeId, user_id=user.id).first()
-    # if not store:
-    #     return abort(400, description="Incorrect storeID in URL")
+    customer = Customer.query.filter_by(id=customerID).first()
+    if not customer:
+        return abort(400, description="Incorrect customer")
 
-    # store.order.append(new_order)
-    # db.session.commit()
+    customer.order.append(new_order)
+    db.session.commit()
 
-    # return jsonify(order_schema.dump(new_order))
-    pass
+    return jsonify(order_schema.dump(new_order))
 
 
 @order.route("/<int:id>", methods=["PUT", "PATCH"])

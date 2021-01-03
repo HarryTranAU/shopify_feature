@@ -15,8 +15,7 @@ class Order(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     order_placed = db.Column(db.Boolean, default=False)
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"),
-                            nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
     orders_products = db.relationship("Product",
                                       secondary=orders_products,
                                       backref="orders")
