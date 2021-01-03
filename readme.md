@@ -153,11 +153,32 @@ sudo apt-get install python3-pip
 pip install -r requirements.txt
 ```
 
+Setup Postgresql
+
+```
+https://github.com/Ctrain68/EC2_postgres_sql_guide
+```
+
+Setup .env (.env.example provided when cloned)
+
+Replace {variables} with your environment variables
+
+```
+DB_PASSWORD= {database password}
+FLASK_ENV=development
+FLASK_APP=main.py
+DB_URI= postgresql+psycopg2://{database user}:{database password}@{ip}:{port}/{database name}
+DB_URI_TEST=s
+JWT_SECRET_KEY= {secret key}
+
+AWS_ACESS_KEY_ID= {id}
+AWS_SECRET_ACESS_KEY_ID= {id}
+AWS_S3_BUCKET= {id}
+```
+
 Program Start
 
 ```
-export FLASK_APP=src/main.py
-export FLASK_ENV=development
 flask run
 ```
 
