@@ -1,5 +1,7 @@
 # Shopify - Advance Abandoned Cart Feature
 
+<https://github.com/HarryTranAU/shopify_feature>
+
 ##### Harry Tran (T3A3)
 
 ## Scope
@@ -24,13 +26,13 @@ Note: This is my personal interpretation of the structure using personal experie
 
 - The Merchant/Seller would create a `user`
 - A `user` can create one `store` (one-to-one)
-- A `store` can have many `products`, `customers`, and `orders` (one-to-many)
+- A `store` can have many `products` and `customers` (one-to-many)
 - An `order` can have many `products` and `products` can belong to many `orders` (many-to-many)
 - `orders` and `products` are associated through a join table `orders_products`
 
 ---
 
-#### **Abandoned Cart Implementation**
+#### **Abandoned Cart Implementation**e
 
 The Abandoned Cart will be implemented through an additional property to the order table called `order_placed`. Using database joins, the abandoned cart customers can be targeted through joining customer details with orders that have not been placed(`order_placed`set to `False`).
 
