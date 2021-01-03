@@ -50,25 +50,74 @@ The Abandoned Cart will be implemented through an additional property to the ord
 
 **Bcrypt**
 
-In this application, Bcrypt will be used to hash the passwords registered to the database. In the event, the database is breached the password are still unusable without the original hashing password.
+In this application, Bcrypt will be used to hash the passwords registered to the database. In the event, the database has breached the password is still unusable without the original hashing password.
 
 Hashing is preferred over encryption because encryption is a two-way function, where the encrypted password can be decrypted. Whereas, hashing is a one-way function. With a properly designed algorithm, there is no way to reverse the hashing process.
 
 **JWT**
 
-JWT is used for authorization and authentication purposes in this application. The use of JWT can allow a user to create, read, update, and delete resource from their own stores, but not other user's stores.
+JWT is used for authorization and authentication purposes in this application. The use of JWT can allow a user to create, read, update, and delete resources from their own stores, but not other user's stores.
 
 **Marshmallow**
 
-Marshmallow is used for object serialization and deserialization in this application. When configured properly, marshmallow is able to validate data as it is being received. Example: data type validators such as Integers and Strings provide marshmallow with information about what type of data is being expected.
+Marshmallow is used for object serialization and deserialization in this application. When configured properly, Marshmallow is able to validate data as it is being received. Example: data type validators such as Integers and Strings provide Marshmallow with information about what type of data is being expected.
 
 **SQLAlchemy**
 
-SQLAlchemy is a object-relational mapper (ORM) that bridges database relations into objects. This allows the application to communicate with the database without using raw SQL queries, preventing possible avenues for SQL injections. A specific example has been found that using the filter method is susceptible to SQL injections. However, in combination with input validation this SQL injection line of attack can be prevented.
+SQLAlchemy is an object-relational mapper (ORM) that bridges database relations into objects. This allows the application to communicate with the database without using raw SQL queries, preventing possible avenues for SQL injections. A specific example has been found that using the filter method is susceptible to SQL injections. However, in combination with input validation this SQL injection line of attack can be prevented.
 
 **AWS (specifically Private Subnets)**
 
-Hosting the database on a private subnet on AWS is another way to secure the data of the application. The structure of this application will require the database to be hosted on a private subnet that isn't associated with a route table that directs traffic to an internet gateway. We will be accessing the the private subnet by using a bastion host on a public subnet. EC2 instances hosted on the same VPC are able to communicate with one another. Allowing the bastion host to communicate with the database on the private subnet.
+Hosting the database on a private subnet on AWS is another way to secure the data of the application. The structure of this application will require the database to be hosted on a private subnet that isn't associated with a routing table that directs traffic to an internet gateway. We will be accessing the private subnet by using a bastion host on a public subnet. EC2 instances hosted on the same VPC are able to communicate with one another. Allowing the bastion host to communicate with the database on the private subnet.
+
+---
+
+## Requirements R3
+
+**Discuss how you will address the following obligations as a developer:**
+- **professional obligations (delivering the project on time, being explicit about ongoing maintenance of the system)**
+- **ethical obligations: ensuring that the application conforms with ethical codes of conduct approved by industry**
+- **legal obligations: that you have assessed whether the application is subject to any legal regulation, if none, consider any privacy implications**
+
+#### **Professional**
+
+**Documentation**
+
+For a developer, documentation is a must. Its main focuses are development, maintenance, and knowledge transfer to other developers. Successful documentation will make information easily accessible and help new users learn quickly. The primary medium used for documentation is code comments/type hints and the readme file.
+
+**Testing**
+
+Testing is important since it discovers defects/bugs before the delivery to the client, which guarantees the quality of the software. It makes the software more reliable and easy to use. Thoroughly tested software ensures reliable and high-performance software operation. This application takes advance of the python `unittest` module for testing purposes.
+
+**Maintenance**
+
+Maintenance is important because it ensures the software is kept up-to-date in terms of security. Software development is also a fast-changing landscape where new technologies allow for different solutions and more efficient solutions. This application will take advantage of GitHub actions to create and maintain the code through a CI/CD pipeline.
+
+#### **Ethical**
+
+**Protecting User's information**
+
+Developers must do everything in their power to protect the user's information. Examples include using Bcrypt to hash passwords, and hosting the database on private subnets to prevent public access.
+
+**Use of safe software**
+
+Malicious software is not only a threat to end-users. Developers must also vet the packages and software they choose to use in their development process. The packages used in this application are widely known and used and obtained through safe and legal means.
+
+#### **Legal**
+
+**Data Rights**
+
+Data rights have been a big topic in the last few years. The best example would be the General Data Protection Regulations (GDPR) drafted by the European Union. The GDPR was passed in 2016 and went into effect in Spring 2018.
+
+The GDPR requires all companies to ask for consent from customers before they process data. In addition, they are required to collect and store that data anonymously – and must inform consumers if their data has been potentially compromised in a breach.
+
+This application gives the merchant/user an option to create/read/update/delete customer data in the database.
+
+**Terms and Conditions**
+
+Terms and conditions are used for drawing boundaries for the use of an application. Should a user misuse the application and disregard the terms and conditions. The application owner or regulator can remove/ban the user.
+
+Specifically, for this application, my terms and conditions would approve or deny a user's store based on the products they wish to add. In Shopify's TOC they specifically state prohibited and restrict items user's cannot sell. E.g. Alcohol, Tobacco, Cigarettes, Fireworks, Firearms and Weapons, Solvents, and Pharmaceuticals.
 
 ---
 
