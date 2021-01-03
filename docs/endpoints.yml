@@ -6,21 +6,18 @@ servers:
   - url: API URL
 tags: 
 - name: Authorization
-  description: Registering new users and logging in
+  description: User related endpoints
 - name: Store
-  description: Resources relating to Stores
+  description: Store related endpoints
 - name: Product
-  description: Product related resources
-- name: Collection
-  description: Collection related resources
+  description: Product related endpoints
 - name: Customer
-  description: Customer related resources
+  description: Customer related endpoints
 - name: Order
-  description: Order related resources
-- name: Fulfillment
-  description: Fulfillment related resources
+  description: Order related endpoints
 - name: Abandoned Cart
-  description: Abandoned Cart related resources
+  description: Abandoned cart related endpoint
+
 
 paths:
   /user/login:
@@ -147,59 +144,7 @@ paths:
         '200':
           description: OK
 
-  /collection:
-    get:
-      tags: [Collection]
-      summary: Index of all collections
-      responses:
-        '200':
-          description: OK
-    post:
-      tags: [Collection]
-      summary: Create a new collection
-      responses:
-        '200':
-          description: OK
-    put:
-      tags: [Collection]
-      summary: Update a collection
-      parameters:
-        - name: id
-          in: header
-          description: id of the collection to be updated
-          schema:
-            type: integer
-          required: True
-        - name: title
-          in: header
-          description: title of the collection to be updated
-          schema:
-            type: string
-          required: True
-        - name: products
-          in: header
-          description: update array of products assigned to collection
-          schema:
-            type: array
-            items:
-              type: string
-      responses:
-        '200':
-          description: OK
-    delete:
-      tags: [Collection]
-      summary: Delete a collection
-      parameters:
-        - name: id
-          in: header
-          description: id of the collection to be deleted
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: OK
-
-  /customer/:
+  /{storeID}/customer/:
     get:
       tags: [Customer]
       summary: Index of all customers
@@ -212,6 +157,7 @@ paths:
       responses:
         '200':
           description: OK
+  /{storeID}/customer/{customerID}:
     put:
       tags: [Customer]
       summary: Update a customer
@@ -225,80 +171,45 @@ paths:
         '200':
           description: OK
 
-  /order/:
+  /{storeID}/order/:
     get:
       tags: [Order]
       summary: Index of all orders
       responses:
         '200':
           description: OK
+  /{storeID}/order/{customerID}:
     post:
       tags: [Order]
       summary: Create a new order
       responses:
         '200':
           description: OK
+  /{storeID}/order/checkout/{orderID}:
     put:
       tags: [Order]
-      summary: Update a order
+      summary: Checkout a order
       responses:
         '200':
           description: OK
+  /{storeID}/order/delete/{orderID}:
     delete:
       tags: [Order]
       summary: Delete a order
       responses:
         '200':
           description: OK
-
-  /fulfillment/:
+  /{storeID}/order/sum:
     get:
-      tags: [Fulfillment]
-      summary: Index of all fulfillments
+      tags: [Order]
+      summary: get a sum of product prices for all order_placed=True for store
       responses:
         '200':
           description: OK
-    post:
-      tags: [Fulfillment]
-      summary: Create a new fulfillment
-      responses:
-        '200':
-          description: OK
-    put:
-      tags: [Fulfillment]
-      summary: Update a fulfillment
-      responses:
-        '200':
-          description: OK
-    delete:
-      tags: [Fulfillment]
-      summary: Delete a fulfillment
-      responses:
-        '200':
-          description: OK
-
-  /abandonedcart/:
+  /{storeID}/order/abandoned:
     get:
       tags: [Abandoned Cart]
-      summary: Index of all Abandoned Carts
-      responses:
-        '200':
-          description: OK
-    post:
-      tags: [Abandoned Cart]
-      summary: Create a new abandoned cart
-      responses:
-        '200':
-          description: OK
-    put:
-      tags: [Abandoned Cart]
-      summary: Update a abandoned cart
-      responses:
-        '200':
-          description: OK
-    delete:
-      tags: [Abandoned Cart]
-      summary: Delete a abandoned cart
+      summary: Index all orders with order_placed=False for store
       responses:
         '200':
           description: OK
