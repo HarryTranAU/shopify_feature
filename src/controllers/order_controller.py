@@ -63,19 +63,18 @@ def order_update(user, storeId, id):
     pass
 
 
-@order.route("/<int:id>", methods=["DELETE"])
+@order.route("/delete/<int:orderID>", methods=["DELETE"])
 @jwt_required
 @verify_user
-def order_delete(user, storeId, id):
-    # order = Order.query.filter_by(id=id, store_id=storeId).first()
-    # if not order:
-    #     return abort(400, description="Unauthorized to delete this order")
+def order_delete(user, storeId, orderID):
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
 
-    # store = Store.query.filter_by(id=storeId, user_id=user.id).first()
-    # if not store:
-    #     return abort(400, description="Incorrect storeID in URL")
+    order = Order.query.filter_by(id=orderID).first()
+    if not order:
+        return abort(400, description="orderID does not exist")
 
-    # db.session.delete(order)
-    # db.session.commit()
-    # return abort(Response("Order deleted successfully"))
-    pass
+    db.session.delete(order)
+    db.session.commit()
+    return abort(Response("Order deleted successfully"))
