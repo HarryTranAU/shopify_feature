@@ -12,8 +12,15 @@ customer = Blueprint("customers",
 
 
 @customer.route("/", methods=["GET"])
-def customer_index(storeId):
+@jwt_required
+@verify_user
+def customer_index(user, storeId):
     customers = Customer.query.filter_by(store_id=storeId).all()
+
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
+
     return jsonify(customers_schema.dump(customers))
 
 
