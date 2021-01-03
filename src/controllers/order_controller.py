@@ -78,3 +78,26 @@ def order_checkout(user, storeId, orderID):
     order.update(order_fields)
     db.session.commit()
     return jsonify(order_schema.dump(order[0]))
+
+
+@order.route("/sum", methods=["GET"])
+@jwt_required
+@verify_user
+def order_sum(user, storeId):
+    pass
+
+
+@order.route("/abandoned", methods=["GET"])
+@jwt_required
+@verify_user
+def order_abandoned(user, storeId):
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
+
+    orders = Order.query.filter_by(order_placed=False)\
+                        .join(Customer)\
+                        .join(Store)\
+                        .filter(Customer.store_id == storeId)\
+                        .all()
+    return jsonify(orders_schema.dump(orders))
