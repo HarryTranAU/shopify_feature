@@ -178,7 +178,15 @@ AWS_SECRET_ACESS_KEY_ID= {id}
 AWS_S3_BUCKET= {id}
 ```
 
-Program Start
+Database init
+
+```
+flask db init
+flask db upgrade
+flask db-custom seed
+```
+
+Server Start
 
 ```
 flask run
