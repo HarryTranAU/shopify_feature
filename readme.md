@@ -33,9 +33,13 @@ Note: This is my personal interpretation of the structure using personal experie
 
 ---
 
-#### **Abandoned Cart Implementation**e
+#### **Abandoned Cart Implementation**
 
 The Abandoned Cart will be implemented through an additional property to the order table called `order_placed`. Using database joins, the abandoned cart customers can be targeted through joining customer details with orders that have not been placed(`order_placed`set to `False`).
+
+`/<int:storeId>/order/abandoned`
+
+This endpoint will return all orders with the `order_placed` set to `False`.
 
 ---
 

@@ -7,6 +7,8 @@ servers:
 tags: 
 - name: Authorization
   description: User related endpoints
+- name: Admin
+  description: Admin related endpoint
 - name: Store
   description: Store related endpoints
 - name: Product
@@ -65,6 +67,14 @@ paths:
           description: OK
         '400':
           description: Email already in use
+
+  /admin/backup:
+    get:
+      tags: [Admin]
+      summary: Backup all data from database. isAdmin=True
+      responses:
+        '200':
+          description: OK
 
   /store:
     get:
