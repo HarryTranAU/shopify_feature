@@ -45,4 +45,4 @@ def admin_backup(user):
         with open("backup.json", "a") as file:
             file.write(data)
 
-    return "OK"
+    return "Backup completed in backup.json"
