@@ -2,7 +2,7 @@ from models.Store import Store
 from models.Product import Product
 from main import db
 from schemas.StoreSchema import store_schema, stores_schema
-from flask import Blueprint, request, jsonify, abort, Response
+from flask import Blueprint, request, jsonify, abort, Response, render_template
 from services.auth_service import verify_user
 from flask_jwt_extended import jwt_required
 
@@ -12,7 +12,8 @@ store = Blueprint("stores", __name__, url_prefix="/store")
 @store.route("/", methods=["GET"])
 def store_index():
     stores = Store.query.all()
-    return jsonify(stores_schema.dump(stores))
+    # return jsonify(stores_schema.dump(stores))
+    return render_template("stores.html", stores=stores)
 
 
 @store.route("/", methods=["POST"])
