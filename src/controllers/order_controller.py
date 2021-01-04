@@ -80,11 +80,20 @@ def order_checkout(user, storeId, orderID):
     return jsonify(order_schema.dump(order[0]))
 
 
-@order.route("/sum", methods=["GET"])
+@order.route("/sum/<int:orderID>", methods=["GET"])
 @jwt_required
 @verify_user
-def order_sum(user, storeId):
-    pass
+def order_sum(user, storeId, orderID):
+    store = Store.query.filter_by(id=storeId, user_id=user.id).first()
+    if not store:
+        return abort(400, description="Incorrect storeID in URL")
+
+    order = db.session.query(Order).filter_by(id=orderID).one()
+    sum = 0
+    for item in order.orders_products:
+        sum += item.price
+
+    return jsonify({"Order Total": int(sum)})
 
 
 @order.route("/abandoned", methods=["GET"])
