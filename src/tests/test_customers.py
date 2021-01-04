@@ -24,13 +24,15 @@ class TestCustomers(unittest.TestCase):
         response = self.client.post("/user/register",
                                     json={
                                         "email": "test99@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
 
         response = self.client.post("/user/login",
                                     json={
                                         "email": "test99@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         data = response.get_json()
         headers_data = {
@@ -46,7 +48,8 @@ class TestCustomers(unittest.TestCase):
                                     headers=headers_data)
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
-        response = self.client.get(f"/{data['id']}/customer/")
+        response = self.client.get(f"/{data['id']}/customer/",
+                                   headers=headers_data)
         data = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(data, list)
@@ -55,13 +58,15 @@ class TestCustomers(unittest.TestCase):
         response = self.client.post("/user/register",
                                     json={
                                         "email": "test98@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
 
         response = self.client.post("/user/login",
                                     json={
                                         "email": "test98@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         data = response.get_json()
         headers_data = {
@@ -98,13 +103,15 @@ class TestCustomers(unittest.TestCase):
         response = self.client.post("/user/register",
                                     json={
                                         "email": "test97@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
 
         response = self.client.post("/user/login",
                                     json={
                                         "email": "test97@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         data = response.get_json()
         headers_data = {
@@ -158,13 +165,15 @@ class TestCustomers(unittest.TestCase):
         response = self.client.post("/user/register",
                                     json={
                                         "email": "test97@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
 
         response = self.client.post("/user/login",
                                     json={
                                         "email": "test97@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         data = response.get_json()
         headers_data = {

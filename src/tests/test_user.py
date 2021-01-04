@@ -23,14 +23,16 @@ class TestUsers(unittest.TestCase):
         response = self.client.post("/user/register",
                                     json={
                                         "email": "test6@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post("/user/login",
                                     json={
                                         "email": "test6@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         self.assertEqual(response.status_code, 200)
 
@@ -38,14 +40,16 @@ class TestUsers(unittest.TestCase):
         response = self.client.post("/user/register",
                                     json={
                                         "email": "test6@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post("/user/login",
                                     json={
                                         "email": "test1@test.com",
-                                        "password": "123456"
+                                        "password": "123456",
+                                        "isAdmin": False
                                     })
         data = response.get_json()
         self.assertEqual(response.status_code, 200)
