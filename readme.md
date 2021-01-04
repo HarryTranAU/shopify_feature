@@ -27,6 +27,7 @@ Note: This is my personal interpretation of the structure using personal experie
 - The Merchant/Seller would create a `user`
 - A `user` can create one `store` (one-to-one)
 - A `store` can have many `products` and `customers` (one-to-many)
+- A `customer` can have many `orders` (one-to-many)
 - An `order` can have many `products` and `products` can belong to many `orders` (many-to-many)
 - `orders` and `products` are associated through a join table `orders_products`
 
