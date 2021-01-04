@@ -22,6 +22,7 @@ def user_register():
     user.email = user_fields["email"]
     user.password = bcrypt.generate_password_hash(
                     user_fields["password"]).decode("utf-8")
+    user.isAdmin = user_fields["isAdmin"]
 
     db.session.add(user)
     db.session.commit()

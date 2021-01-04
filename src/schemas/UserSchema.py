@@ -10,6 +10,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
     email = ma.String(required=True, validate=Length(min=4))
     password = ma.String(required=True, validate=Length(min=6))
+    isAdmin = ma.Boolean(default=False)
 
 
 user_schema = UserSchema()

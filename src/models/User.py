@@ -9,6 +9,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
+    isAdmin = db.Column(db.Boolean(), nullable=False)
     store = db.relationship("Store", backref=backref("user", uselist=False))
 
     def __repr__(self):
