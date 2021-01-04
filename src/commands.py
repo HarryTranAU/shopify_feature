@@ -18,7 +18,7 @@ def seed_db():
     from models.Store import Store
     from models.Product import Product
     from models.Customer import Customer
-    from models.Order import Order, orders_products
+    from models.Order import Order
     from main import bcrypt
     from faker import Faker
 
